@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test App with Vulnerabilities</title>
+    <!-- VULNERABLE: Using outdated Bootstrap with XSS vulnerabilities -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- VULNERABLE: Using outdated jQuery with XSS vulnerabilities -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert alert-warning">
+            <h4>⚠️ Test Repository with Intentional Vulnerabilities</h4>
+            <p>This repository contains intentionally vulnerable dependencies for testing SBOM-Link security scanning.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Vulnerable Dependencies</h3>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-danger">lodash 4.17.15 (Prototype Pollution)</li>
+                    <li class="list-group-item list-group-item-danger">axios 0.21.1 (SSRF)</li>
+                    <li class="list-group-item list-group-item-warning">moment 2.29.1 (ReDoS)</li>
+                    <li class="list-group-item list-group-item-danger">express 4.17.1 (Various CVEs)</li>
+                    <li class="list-group-item list-group-item-warning">jquery 3.6.0 (XSS)</li>
+                    <li class="list-group-item list-group-item-warning">bootstrap 4.6.0 (XSS)</li>
+                    <li class="list-group-item list-group-item-danger">react 16.14.0 (Various CVEs)</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Test Vulnerable Code</h3>
+                <div class="form-group">
+                    <label for="userInput">User Input (XSS Test):</label>
+                    <input type="text" class="form-control" id="userInput" placeholder="Enter <script>alert('xss')</script>">
+                </div>
+                <button class="btn btn-primary" onclick="testVulnerability()">Test Vulnerability</button>
+                <div id="output" class="mt-3"></div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h3>Expected SBOM-Link Findings</h3>
+            <p>When scanned by SBOM-Link, this repository should generate:</p>
+            <ul>
+                <li>High/Critical severity alerts for vulnerable dependencies</li>
+                <li>Policy violations for outdated packages</li>
+                <li>Security recommendations for dependency updates</li>
+                <li>Risk score calculations based on vulnerability data</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- VULNERABLE: Using outdated Bootstrap with XSS vulnerabilities -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // VULNERABLE: XSS vulnerability - directly inserting user input into DOM
+        function testVulnerability() {
+            const userInput = document.getElementById('userInput').value;
+            const output = document.getElementById('output');
+            
+            // VULNERABLE: Direct DOM insertion without sanitization
+            output.innerHTML = '<div class="alert alert-info">User input: ' + userInput + '</div>';
+            
+            // VULNERABLE: Using jQuery with potential XSS
+            $('#output').append('<p>Processed with jQuery: ' + userInput + '</p>');
+        }
+
+        // VULNERABLE: Using moment.js with potential ReDoS
+        function testMomentVulnerability() {
+            const moment = require('moment');
+            const userDate = document.getElementById('userInput').value;
+            
+            // VULNERABLE: Using moment with user input without validation
+            const formattedDate = moment(userDate).format('YYYY-MM-DD');
+            console.log('Formatted date:', formattedDate);
+        }
+    </script>
+</body>
+</html> 
