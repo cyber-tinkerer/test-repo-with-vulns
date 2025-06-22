@@ -54,4 +54,4 @@ When scanned by SBOM-Link, this repository should generate:
 - High/Critical severity alerts for vulnerable dependencies
 - Policy violations for outdated packages
 - Security recommendations for dependency updates
-- Risk score calculations based on vulnerability data 
+- Risk score calculations based on vulnerability data # Test webhook
