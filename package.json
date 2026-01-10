@@ -16,7 +16,7 @@
     "moment": "2.29.1",
     "express": "4.17.1",
     "jquery": "3.6.0",
-    "bootstrap": "4.6.0",
+    "bootstrap": "5.0.0",
     "react": "16.14.0",
     "react-dom": "16.14.0"
   },
